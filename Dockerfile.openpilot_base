@@ -12,9 +12,60 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
-COPY tools/install_ubuntu_dependencies.sh /tmp/tools/
-RUN INSTALL_EXTRA_PACKAGES=no /tmp/tools/install_ubuntu_dependencies.sh && \
-    rm -rf /var/lib/apt/lists/* /tmp/* && \
+# install ubuntu dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates
+RUN apt-get install -y --no-install-recommends clang
+RUN apt-get install -y --no-install-recommends cppcheck
+RUN apt-get install -y --no-install-recommends build-essential
+RUN apt-get install -y --no-install-recommends gcc-arm-none-eabi
+RUN apt-get install -y --no-install-recommends liblzma-dev
+RUN apt-get install -y --no-install-recommends capnproto
+RUN apt-get install -y --no-install-recommends libcapnp-dev
+RUN apt-get install -y --no-install-recommends curl
+RUN apt-get install -y --no-install-recommends libcurl4-openssl-dev
+RUN apt-get install -y --no-install-recommends git
+RUN apt-get install -y --no-install-recommends git-lfs
+RUN apt-get install -y --no-install-recommends ffmpeg
+RUN apt-get install -y --no-install-recommends libavformat-dev
+RUN apt-get install -y --no-install-recommends libavcodec-dev
+RUN apt-get install -y --no-install-recommends libavdevice-dev
+RUN apt-get install -y --no-install-recommends libavutil-dev
+RUN apt-get install -y --no-install-recommends libavfilter-dev
+RUN apt-get install -y --no-install-recommends libbz2-dev
+RUN apt-get install -y --no-install-recommends libeigen3-dev
+RUN apt-get install -y --no-install-recommends libffi-dev
+RUN apt-get install -y --no-install-recommends libglew-dev
+RUN apt-get install -y --no-install-recommends libgles2-mesa-dev
+RUN apt-get install -y --no-install-recommends libglfw3-dev
+RUN apt-get install -y --no-install-recommends libglib2.0-0
+RUN apt-get install -y --no-install-recommends libqt5charts5-dev
+RUN apt-get install -y --no-install-recommends libncurses5-dev
+RUN apt-get install -y --no-install-recommends libssl-dev
+RUN apt-get install -y --no-install-recommends libusb-1.0-0-dev
+RUN apt-get install -y --no-install-recommends libzmq3-dev
+RUN apt-get install -y --no-install-recommends libsqlite3-dev
+RUN apt-get install -y --no-install-recommends libsystemd-dev
+RUN apt-get install -y --no-install-recommends locales
+RUN apt-get install -y --no-install-recommends opencl-headers
+RUN apt-get install -y --no-install-recommends ocl-icd-libopencl1
+RUN apt-get install -y --no-install-recommends ocl-icd-opencl-dev
+RUN apt-get install -y --no-install-recommends portaudio19-dev
+RUN apt-get install -y --no-install-recommends qtmultimedia5-dev
+RUN apt-get install -y --no-install-recommends qtlocation5-dev
+RUN apt-get install -y --no-install-recommends qtpositioning5-dev
+RUN apt-get install -y --no-install-recommends qttools5-dev-tools
+RUN apt-get install -y --no-install-recommends libqt5svg5-dev
+RUN apt-get install -y --no-install-recommends libqt5serialbus5-dev 
+RUN apt-get install -y --no-install-recommends libqt5x11extras5-dev
+RUN apt-get install -y --no-install-recommends libqt5opengl5-dev
+RUN apt-get install -y --no-install-recommends libavresample-dev
+RUN apt-get install -y --no-install-recommends qt5-default
+RUN apt-get install -y --no-install-recommends python-dev
+
+
+RUN rm -rf /var/lib/apt/lists/* && \
+    rm -rf /tmp/* && \
+    # remove unused architectures from gcc for panda
     cd /usr/lib/gcc/arm-none-eabi/9.2.1 && \
     rm -rf arm/ thumb/nofp thumb/v6* thumb/v8* thumb/v7+fp thumb/v7-r+fp.sp
 
