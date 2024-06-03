@@ -59,5 +59,8 @@ runs:
         find . -type f -executable -not -perm 755 -exec chmod 755 {} \;
         find . -type f -not -executable -not -perm 644 -exec chmod 644 {} \;
     # build our docker image
+    - shell:
+      run: |
+        docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
     - shell: bash
       run: eval ${{ env.BUILD }}
